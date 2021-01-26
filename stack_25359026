@@ -1,0 +1,74 @@
+/*
+ * @version 2021년도 1월
+ * @author 윤영준
+ *
+ *<출력>
+ *
+ *
+ *
+ *
+ */
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		while (true) {
+			Stack<String> stack = new Stack<>();
+			String[] N = br.readLine().split("");
+			int count = 0;
+
+			if (N[0].equals("."))
+				break;
+
+			else {
+				for (int i = 0; i < N.length; i++) {
+					if (N[i].equals("(") || N[i].equals("[")) {
+						stack.push(N[i]);
+						count++;
+					}
+
+					else if (N[i].equals(")")) {
+						if (stack.isEmpty() || !stack.peek().equals("("))
+							continue;
+						else {
+							stack.pop();
+							count++;
+						}
+					}
+
+					else if (N[i].equals("]")) {
+						if (stack.isEmpty() || !stack.peek().equals("["))
+							continue;
+						else {
+							stack.pop();
+							count++;
+						}
+					}
+
+					else {
+						count++;
+						continue;
+					}
+				}
+				if (stack.isEmpty() && count == N.length)
+					System.out.println("yes");
+				if (!stack.isEmpty() || count != N.length)
+					System.out.println("no");
+
+			}
+
+		}
+	}
+}
