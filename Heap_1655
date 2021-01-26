@@ -1,0 +1,46 @@
+/*
+ * @version 2021년도 1월
+ * @author 윤영준
+ * <입력>
+ * 첫째 줄에는 수빈이가 외치는 정수의 개수 N이 주어진다. N은 1보다 크거나 같고, 100,000보다 작거나 같은 자연수이다.
+ * 그 다음 N줄에 걸쳐서 수빈이가 외치는 정수가 차례대로 주어진다. 정수는 -10,000보다 크거나 같고, 10,000보다 작거나 같다.
+ * <출력>
+ * 한 줄에 하나씩 N줄에 걸쳐 수빈이의 동생이 말해야하는 수를 순서대로 출력한다.
+ */
+(참고 : https://dragon-h.tistory.com/6)
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		PriorityQueue<Integer> mpq = new PriorityQueue<>((o1, o2) -> o1 - o2); // 최소힙
+		PriorityQueue<Integer> Mpq = new PriorityQueue<>((o1, o2) -> o2 - o1); // 최대힙
+		StringBuilder sb = new StringBuilder();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+
+		int N = Integer.parseInt(br.readLine()), value;
+
+		for (int i = 0; i < N; i++) {
+			value = Integer.parseInt(br.readLine());
+
+			if (mpq.size() == Mpq.size())
+				Mpq.offer(value);
+			else
+				mpq.offer(value);
+			
+			if(!mpq.isEmpty() && !Mpq.isEmpty())
+				if(mpq.peek() < Mpq.peek()) {
+					int tmp = mpq.poll();
+					mpq.offer(Mpq.poll());
+					Mpq.offer(tmp);
+				}
+			sb.append(Mpq.peek() + "\n");
+		}
+		System.out.println(sb);
+	}
+}
