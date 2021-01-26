@@ -1,0 +1,80 @@
+/*
+ * @version 2021년도 1월
+ * @author 윤영준
+ * <입력>
+ * 첫째 줄에 큐의 크기 N과 뽑아내려고 하는 수의 개수 M이 주어진다. N은 50보다 작거나 같은 자연수이고, M은 N보다 작거나 같은 자연수이다.
+ * 둘째 줄에는 지민이가 뽑아내려고 하는 수의 위치가 순서대로 주어진다. 위치는 1보다 크거나 같고, N보다 작거나 같은 자연수이다.
+ * <출력>
+ * 첫째 줄에 문제의 정답을 출력한다.
+ */
+ 
+ import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Queue;
+import java.util.StringTokenizer;
+import java.util.LinkedList;
+
+public class Main {
+	static Queue <Integer> q;
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st= new StringTokenizer(br.readLine());
+		int size=Integer.parseInt(st.nextToken());
+		int n=Integer.parseInt(st.nextToken());
+		int answer=0;
+		
+		q = new LinkedList<Integer> ();
+		for(int i=1;i<=size;i++) q.offer(i); //큐 채우기
+		
+		st= new StringTokenizer(br.readLine());
+		for(int i=0;i<n;i++) {
+			int num=Integer.parseInt(st.nextToken()); //목표 숫자
+			answer+=getCost(num);
+		}
+		
+		System.out.println(answer);
+	}
+	public static int getCost(int num) {
+		int answer=0;
+		while(q.peek()!=num) { //목표를 발견할때까지 반복
+			q.offer(q.poll());
+			answer++;
+		}
+		q.poll();
+		return Math.min(answer, q.size()+1-answer); //왼쪽 혹은 오른쪽 중 작은 것
+	}
+
+}
+//////////////////////////////////////////////
+참고자료
+public class Main {
+	static Queue<Integer> q;
+
+	public static void main(String[] args) throws IOException {
+		Scanner scan = new Scanner(System.in);
+
+		int n = scan.nextInt();
+		int m = scan.nextInt();
+		Deque<Integer> dq = new LinkedList<>();
+		int countSum = 0;
+		for (int i = 1; i <= n; i++) {		// Queue 에 입력
+			dq.add(i);
+		}
+		for (int i = 0; i < m; i++) {
+			int k = scan.nextInt();
+			int count = 0;
+			while (dq.peekFirst() != k) {
+				dq.offer(dq.poll());
+				count++;
+			}
+			countSum += Math.min(count, dq.size() - count);
+			dq.removeFirst();
+
+		}
+		System.out.println(countSum);
+
+	}
+}
