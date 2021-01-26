@@ -1,0 +1,58 @@
+/*
+ * @version 2021년도 1월
+ * @author 윤영준
+ *
+ * <입력>
+ * 첫 줄에 n (1 ≤ n ≤ 100,000)이 주어진다. 둘째 줄부터 n개의 줄에는 수열을 이루는 1이상 n이하의 정수가 하나씩 순서대로 주어진다. 물론 같은 정수가 두 번 나오는 일은 없다.
+ * <출력>
+ * 입력된 수열을 만들기 위해 필요한 연산을 한 줄에 한 개씩 출력한다. push연산은 +로, pop 연산은 -로 표현하도록 한다. 불가능한 경우 NO를 출력한다.
+ */
+ 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Stack;
+
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringBuilder sb = new StringBuilder();
+		
+		int T = Integer.parseInt(br.readLine());
+		int start = 1 ;
+		
+		Stack<Integer> stack = new Stack<>();
+		
+		for(int i = 0 ; i < T ; i ++) {
+			boolean check = false;
+			int num = Integer.parseInt(br.readLine());
+			while(start <= num) {
+				sb.append("+\n");
+				stack.push(start++);
+				check = true;
+			}
+			
+			while(!stack.isEmpty() && stack.peek() >= num) {
+				sb.append("-\n");
+				stack.pop();
+				check = true;
+			}
+			
+			if(!check) {
+				sb = new StringBuilder("NO");
+				break;
+			}
+		
+		}
+		bw.write(sb.toString());
+		bw.flush();		
+		bw.close();
+		br.close();
+	}
+}
