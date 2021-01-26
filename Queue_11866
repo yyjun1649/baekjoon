@@ -1,0 +1,47 @@
+/*
+ * @version 2021년도 1월
+ * @author 윤영준
+ * <입력>
+ * 첫째 줄에 N과 K가 빈 칸을 사이에 두고 순서대로 주어진다. (1 ≤ K ≤ N ≤ 1,000)
+ * <출력>
+ * 예제와 같이 요세푸스 순열을 출력한다
+ */
+ 
+ import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		StringBuffer sb = new StringBuffer("<");
+		Queue<Integer> queue = new LinkedList<>();
+
+		st = new StringTokenizer(br.readLine());
+		int T = Integer.parseInt(st.nextToken());
+		int K = Integer.parseInt(st.nextToken());
+		
+		for(int i = 1 ; i <= T ; i++)
+			queue.offer(i);
+
+		while(queue.size()>1) {
+			for(int j = 1 ; j < K ; j++) {
+			 queue.offer(queue.poll());
+			}
+			sb.append(queue.poll() + ", ");
+		}
+		sb.delete(sb.length()-1,sb.length()-1);
+		sb.append(queue.poll()+">");
+		
+		System.out.println(sb);
+
+		br.close();
+		
+
+	}
+}
