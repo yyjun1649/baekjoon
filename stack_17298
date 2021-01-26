@@ -1,0 +1,32 @@
+/*
+ * @version 2021년도 1월
+ * @author 윤영준
+ *
+ * <입력>
+ * 첫째 줄에 수열 A의 크기 N (1 ≤ N ≤ 1,000,000)이 주어진다. 둘째에 수열 A의 원소 A1, A2, ..., AN (1 ≤ Ai ≤ 1,000,000)이 주어진다.
+ * <출력>
+ * 총 N개의 수 NGE(1), NGE(2), ..., NGE(N)을 공백으로 구분해 출력한다.
+ */
+ import java.io.*;
+import java.util.*;
+public class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int N = Integer.parseInt(br.readLine());
+		int result[] = new int[N];
+		StringTokenizer st = new StringTokenizer(br.readLine()," ");
+		Stack<int[]> s = new Stack<>();
+		for(int i=0; i<N; i++) {
+			int number = Integer.parseInt(st.nextToken());
+			while(!s.isEmpty() && number > s.peek()[0]) 
+				result[s.pop()[1]] = number;
+			s.push(new int[] {number, i});
+		}
+		for(int r: result) {
+			if(r==0) r=-1;
+			bw.append(r+"\n");
+		}
+		bw.flush();
+	}
+}
